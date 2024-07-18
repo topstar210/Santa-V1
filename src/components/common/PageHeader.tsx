@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import type { ReactNode } from 'react';
 
 interface PageHeaderProps {
@@ -16,9 +16,9 @@ const PageHeader = ({ children }: PageHeaderProps) => {
     >
       <Typography variant="h2">{children}</Typography>
       <Box flexGrow={1} />
-      <Button variant="outlined" color="primary" size="large" sx={{ ml: 2 }}>
+      {/* <Button variant="outlined" color="primary" size="large" sx={{ ml: 2 }}>
         Remove
-      </Button>
+      </Button> */}
     </Stack>
   );
 };
