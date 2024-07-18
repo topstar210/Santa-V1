@@ -101,7 +101,7 @@ const ProfileDropdown = () => {
               width: '80%',
               py: 0.5,
             }}
-            onClick={() => (location.href = '/admin/authentication/login')}
+            onClick={() => (location.href = '/authentication/login')}
           >
             Logout
           </Button>
