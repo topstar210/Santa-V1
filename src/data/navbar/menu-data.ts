@@ -8,9 +8,10 @@ interface IProfileOptions {
   id: string;
   title: string;
   icon: string;
+  link: string;
 }
 export const profileOptions: IProfileOptions[] = [
-  { id: uniqueId(), title: 'My Profile', icon: 'fa-regular:user' },
+  { id: uniqueId(), title: 'My Profile', icon: 'fa-regular:user', link: '/profile' },
 ];
 
 interface INotification {

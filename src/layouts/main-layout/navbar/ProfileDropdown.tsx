@@ -7,6 +7,7 @@ import {
   Menu,
   MenuItem,
   Stack,
+  Link,
   Typography,
 } from '@mui/material';
 import AvatarImage from 'assets/images/person.svg';
@@ -86,10 +87,12 @@ const ProfileDropdown = () => {
             }}
             onClick={handleClose}
           >
-            <ListItemIcon sx={{ '&.MuiListItemIcon-root': { minWidth: 2, mr: 1 } }}>
-              <IconifyIcon width={16} height={16} icon={option.icon} />
-            </ListItemIcon>
-            <Typography variant="subtitle2"> {option.title}</Typography>
+            <Link href={option.link} sx={{ display: 'contents' }}>
+              <ListItemIcon sx={{ '&.MuiListItemIcon-root': { minWidth: 2, mr: 1 } }}>
+                <IconifyIcon width={16} height={16} icon={option.icon} />
+              </ListItemIcon>
+              <Typography variant="subtitle2"> {option.title}</Typography>
+            </Link>
           </MenuItem>
         ))}
         <Stack direction="row" sx={{ width: 1, justifyContent: 'center' }}>
