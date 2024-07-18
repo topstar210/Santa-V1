@@ -21,16 +21,16 @@ interface INotification {
 }
 
 export const notificationOptions: INotification[] = [
-  { id: uniqueId(), avatar: team1, title: 'Alex Joined the Team!', subtitle: 'Welcome him aboard' },
-  {
-    id: uniqueId(),
-    avatar: team2,
-    title: 'Meeting Reminder',
-    subtitle: 'Don’t forget the 3 PM meeting',
-  },
-  { id: uniqueId(), avatar: team3, title: 'Invoice Paid', subtitle: 'Your invoice has been paid' },
-  { id: uniqueId(), avatar: team4, title: 'Sara completed tasks', subtitle: 'Review her work' },
-  { id: uniqueId(), avatar: team5, title: 'Anna Joined the Team!', subtitle: 'Say hello to her' },
+  // { id: uniqueId(), avatar: team1, title: 'Alex Joined the Team!', subtitle: 'Welcome him aboard' },
+  // {
+  //   id: uniqueId(),
+  //   avatar: team2,
+  //   title: 'Meeting Reminder',
+  //   subtitle: 'Don’t forget the 3 PM meeting',
+  // },
+  // { id: uniqueId(), avatar: team3, title: 'Invoice Paid', subtitle: 'Your invoice has been paid' },
+  // { id: uniqueId(), avatar: team4, title: 'Sara completed tasks', subtitle: 'Review her work' },
+  // { id: uniqueId(), avatar: team5, title: 'Anna Joined the Team!', subtitle: 'Say hello to her' },
 ];
 
 export const messageOptions: INotification[] = [

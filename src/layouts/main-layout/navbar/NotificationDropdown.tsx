@@ -45,7 +45,7 @@ const NotificationDropdown = () => {
           color: 'grey.200',
         }}
       >
-        <Badge color="primary" badgeContent={5}>
+        <Badge color="primary" badgeContent={notificationOptions.length}>
           <NotificationIcon />
         </Badge>
       </IconButton>
@@ -70,7 +70,7 @@ const NotificationDropdown = () => {
       >
         <Stack direction="row" py={2} px={4} justifyContent="space-between" alignItems="center">
           <Typography variant="h6">Notifications</Typography>
-          <Chip label="5 new" color="primary" size="small" />
+          {notificationOptions.length > 0 && <Chip label="5 new" color="primary" size="small" />}
         </Stack>
         <SimpleBar style={{ height: '385px' }}>
           {notificationOptions.map((notification) => (
