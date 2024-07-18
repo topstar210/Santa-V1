@@ -11,7 +11,7 @@ const TemporaryUsers = () => {
         pb: 1,
       }}
     >
-      <PageHeader>Dashboard</PageHeader>
+      <PageHeader>Temporary Users</PageHeader>
       {/* /* ------------- Stats section ---------------- */}
       <Grid container spacing={3} mt={1} mb={3}>
         <Grid item xs={12} lg={12}>
