@@ -24,7 +24,7 @@ const RegisterForm = () => {
           href="#!"
           type="submit"
         >
-          Sign Up
+          Log in
         </Button>
       </Stack>
     </Box>
