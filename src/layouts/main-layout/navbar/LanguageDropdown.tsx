@@ -17,12 +17,6 @@ const LANGS = [
     label: 'English',
     icon: 'flag:us-4x3',
   },
-
-  {
-    value: 'bd',
-    label: 'Bangla',
-    icon: 'flag:bd-4x3',
-  },
 ];
 
 // ----------------------------------------------------------------------

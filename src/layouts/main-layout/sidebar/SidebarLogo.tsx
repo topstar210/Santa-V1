@@ -11,11 +11,12 @@ const SidebarLogo = () => {
         display: 'flex',
         alignItems: 'center',
         gap: 1.5,
-        // pl: theme.spacing(2.5),
       }}
     >
-      <Logo fontSize={'large'} />
-      <Typography variant="h4">Modernize</Typography>
+      <Logo />
+      <Typography variant="h6">
+        Five Minute <br /> Friend
+      </Typography>
     </Link>
   );
 };
