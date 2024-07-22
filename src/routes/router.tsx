@@ -5,6 +5,8 @@ import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
 
+import AuthGuard from 'components/auth/AuthGuard';
+
 /* ---------------- Lazy loads various components ------------------------- */
 const App = lazy(() => import('App'));
 const MainLayout = lazy(() => import('layouts/main-layout'));
@@ -36,7 +38,9 @@ export const routes = [
         path: paths.default,
         element: (
           <Suspense fallback={<PageLoader />}>
-            <MainLayout />
+            <AuthGuard>
+              <MainLayout />
+            </AuthGuard>
           </Suspense>
         ),
         children: [
