@@ -4,6 +4,7 @@ import { postData } from 'services/apiService';
 interface AuthContextType {
   isAuthenticated: boolean;
   login: (credentials: { email: string; password: string }) => void;
+  loginByCode: (code: string) => void;
   logout: () => void;
 }
 
@@ -51,6 +52,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const loginByCode = async (code: string) => {
+    try {
+      const { data, message, status } = await postData('/login-by-code', { code });
+      const { access_token, user } = data;
+      console.log('data', message, user, access_token);
+
+      // Store the token in local storage
+      localStorage.setItem('token', access_token);
+
+      setIsAuthenticated(status);
+      return status;
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     await postData('/logout', '');
 
@@ -59,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, loginByCode, logout }}>
       {children}
     </AuthContext.Provider>
   );
