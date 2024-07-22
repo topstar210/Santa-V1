@@ -37,7 +37,7 @@ const ModuleStatusCards = () => {
     <>
       {stats.map((cardItem) => {
         return (
-          <Grid item xs={12} md={6} xl={4}>
+          <Grid item xs={12} md={6} xl={4} key={cardItem.id}>
             <Card>
               <CardActionArea>
                 <CardMedia component="img" alt="green iguana" image={cardItem.bgImg} />

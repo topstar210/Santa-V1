@@ -14,8 +14,11 @@ import AvatarImage from 'assets/images/person.svg';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { profileOptions } from 'data/navbar/menu-data';
 import { useState } from 'react';
+import { useAuth } from 'providers/useAuth';
 
 const ProfileDropdown = () => {
+  const { logout } = useAuth();
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -104,7 +107,7 @@ const ProfileDropdown = () => {
               width: '80%',
               py: 0.5,
             }}
-            onClick={() => (location.href = '/authentication/login')}
+            onClick={() => logout()}
           >
             Logout
           </Button>

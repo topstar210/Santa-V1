@@ -22,6 +22,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 1,
     '@typescript-eslint/no-unused-expressions': 1,
     '@typescript-eslint/no-empty-interface': 'off',
+    "@typescript-eslint/no-explicit-any": 'off',
     'react-refresh/only-export-components': 'off',
     'react-hooks/exhaustive-deps': 'off',
     'react-hooks/rules-of-hooks': 'off',

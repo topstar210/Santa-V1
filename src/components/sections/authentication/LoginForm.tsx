@@ -13,11 +13,28 @@ import {
 } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from 'providers/useAuth';
 
 const LoginForm = () => {
+  const { login } = useAuth();
+
+  const [form, setForm] = useState({
+    email: 'tester123@example.com',
+    password: '123456',
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const navigate = useNavigate();
+  const handleLogin = async () => {
+    const isLogin = await login(form);
+    if (isLogin !== null) {
+      navigate(`/`);
+    }
   };
 
   return (
@@ -27,7 +44,20 @@ const LoginForm = () => {
       }}
     >
       <Stack spacing={3}>
-        <TextField fullWidth variant="outlined" id="mail" type="text" label="Email" />
+        <TextField
+          fullWidth
+          variant="outlined"
+          id="mail"
+          type="text"
+          label="Email"
+          value={form.email}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              email: e.target.value,
+            })
+          }
+        />
         <TextField
           fullWidth
           variant="outlined"
@@ -51,6 +81,13 @@ const LoginForm = () => {
               </InputAdornment>
             ),
           }}
+          value={form.password}
+          onChange={(e) =>
+            setForm({
+              ...form,
+              password: e.target.value,
+            })
+          }
         />
       </Stack>
       <FormGroup sx={{ my: 2 }}>
@@ -70,7 +107,7 @@ const LoginForm = () => {
         component={Link}
         href="#!"
         type="submit"
-        onClick={() => (location.href = '/')}
+        onClick={() => handleLogin()}
       >
         Sign In
       </Button>

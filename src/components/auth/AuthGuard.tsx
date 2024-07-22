@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { useAuth } from 'providers/useAuth'; // Assume you have a custom hook for auth
+import { useAuth } from 'providers/useAuth';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -7,7 +7,6 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  console.log('isAuthenticated ---- >>>> ', isAuthenticated);
 
   if (!isAuthenticated) {
     return <Navigate to="/authentication/login" replace />;
