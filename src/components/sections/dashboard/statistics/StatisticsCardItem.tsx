@@ -1,42 +1,18 @@
 import { Box, Card, Grid, Stack, Typography } from '@mui/material';
-import { useBreakpoints } from 'providers/useBreakPoint';
 import { IStatisticsCard } from './StatisticCards';
 
 interface StatisticsCardProps {
   cardData: IStatisticsCard;
-  index: number;
-  totalCount?: number;
+  index: string;
 }
 
-const StatisticsCardItem = ({ cardData, index }: StatisticsCardProps) => {
+const StatisticsCardItem = ({ cardData }: StatisticsCardProps) => {
   const { title, subtitle, icon: IconComponent } = cardData || {};
-  const { up } = useBreakpoints();
-  const upXl = up('xl');
-  const upSm = up('sm');
-  const upXs = up('xs');
   return (
     <>
       <Card
         sx={{
           borderRadius: 4,
-          ...(upXs && {
-            borderTopLeftRadius: index === 0 ? 8 : 0,
-            borderTopRightRadius: index === 0 ? 8 : 0,
-            borderBottomLeftRadius: index === 3 ? 8 : 0,
-            borderBottomRightRadius: index === 3 ? 8 : 0,
-          }),
-          ...(upSm && {
-            borderTopLeftRadius: index === 0 ? 8 : 0,
-            borderBottomLeftRadius: index === 2 ? 8 : 0,
-            borderTopRightRadius: index === 1 ? 8 : 0,
-            borderBottomRightRadius: index === 3 ? 8 : 0,
-          }),
-          ...(upXl && {
-            borderTopLeftRadius: index === 0 ? 8 : 0,
-            borderBottomLeftRadius: index === 0 ? 8 : 0,
-            borderTopRightRadius: index === 3 ? 8 : 0,
-            borderBottomRightRadius: index === 3 ? 8 : 0,
-          }),
         }}
       >
         <Box

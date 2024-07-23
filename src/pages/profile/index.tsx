@@ -1,6 +1,13 @@
 import { Container, Box, TextField, Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useAuth } from 'providers/useAuth';
 
 const ProfilePage = () => {
+  const { user } = useAuth();
+  const [form, setForm] = useState({
+    ...user,
+  });
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -16,6 +23,8 @@ const ProfilePage = () => {
         </Typography>
         <Box component="form" sx={{ mt: 3 }}>
           <TextField
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
             variant="outlined"
             margin="normal"
             required
@@ -27,6 +36,8 @@ const ProfilePage = () => {
             autoFocus
           />
           <TextField
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             variant="outlined"
             margin="normal"
             required
