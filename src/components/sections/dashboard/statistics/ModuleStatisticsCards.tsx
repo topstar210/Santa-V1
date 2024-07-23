@@ -33,14 +33,22 @@ const ModuleStatisticsCards = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data, status } = await fetchData('/modules');
+      const { data, status } = await fetchData('/module/analytic');
       if (status) {
-        const ttModules = data.length;
+        const { total, complete, uncomplete } = data;
         setStats({
           ...stats,
           totalModules: {
             ...stats.totalModules,
-            title: ttModules,
+            title: total,
+          },
+          completed: {
+            ...stats.completed,
+            title: complete,
+          },
+          uncompleted: {
+            ...stats.uncompleted,
+            title: uncomplete,
           },
         });
       }

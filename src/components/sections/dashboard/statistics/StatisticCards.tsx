@@ -38,14 +38,34 @@ const StatisticsCards = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const { data, status } = await fetchData('/users');
+      const { data, status } = await fetchData('/user/analytic');
       if (status) {
-        const ttUser = data.length;
+        const { total, registered, temp } = data;
         setStats({
           ...stats,
           totalUsers: {
             ...stats.totalUsers,
-            title: ttUser,
+            title: total,
+          },
+          registUsers: {
+            ...stats.registUsers,
+            title: registered,
+          },
+          tempUsers: {
+            ...stats.tempUsers,
+            title: temp,
+          },
+        });
+      }
+
+      const moduleData = await fetchData('/module/analytic');
+      if (moduleData.status) {
+        const { total } = moduleData.data;
+        setStats({
+          ...stats,
+          totalModules: {
+            ...stats.totalModules,
+            title: total,
           },
         });
       }
