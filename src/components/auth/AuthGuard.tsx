@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from 'providers/useAuth';
 
 interface AuthGuardProps {
@@ -6,10 +6,17 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
+  const location = useLocation();
+  const { pathname } = location;
+
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
+  const isAuthenticatedPath = pathname.includes('authentication');
+
+  if (!isAuthenticated && !isAuthenticatedPath) {
     return <Navigate to="/authentication/login" replace />;
+  } else if (isAuthenticated && isAuthenticatedPath) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;

@@ -2,8 +2,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import BreakpointsProvider from 'providers/useBreakPoint';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
-import router from 'routes/router.tsx';
+import AppRouter from 'routes/router.tsx';
 import { theme } from 'theme/theme.ts';
 import { AuthProvider } from 'providers/useAuth';
 import { ToastContainer } from 'react-toastify';
@@ -16,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <BreakpointsProvider>
         <CssBaseline />
         <AuthProvider>
-          <RouterProvider router={router} />
+          <AppRouter />
         </AuthProvider>
         <ToastContainer />
       </BreakpointsProvider>

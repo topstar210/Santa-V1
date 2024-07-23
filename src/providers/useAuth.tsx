@@ -7,6 +7,7 @@ interface userType {
   email: string;
   status: string;
   id: number;
+  is_admin: number;
 }
 
 interface AuthContextType {

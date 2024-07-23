@@ -16,6 +16,9 @@ interface NavMenuItemType {
 const NavMenuItem = ({ item, pathTo }: NavMenuItemType) => {
   const { icon: Icon } = item;
   const itemIcon = Icon ? <Icon /> : null;
+
+  if (!item.available) return <></>;
+
   return (
     <List component="li" disablePadding key={item?.id && item.title}>
       <ListItemButton
@@ -28,22 +31,11 @@ const NavMenuItem = ({ item, pathTo }: NavMenuItemType) => {
           sx={{
             py: 0.4,
             px: 0,
-            ...(!item.available && {
-              color: 'action.active',
-              opacity: 0.9,
-            }),
           }}
         >
           {itemIcon}
         </ListItemIcon>
-        <ListItemText
-          sx={{
-            ...(!item.available && {
-              color: 'action.active',
-              opacity: 0.9,
-            }),
-          }}
-        >
+        <ListItemText>
           {<>{`${item?.title}`}</>}
           <br />
           {item?.subtitle ? <Typography variant="caption">{item.subtitle}</Typography> : ''}

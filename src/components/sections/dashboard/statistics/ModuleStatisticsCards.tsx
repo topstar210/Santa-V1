@@ -4,6 +4,7 @@ import PersonalSettingsIcon from 'components/icons/menu-icons/PersonalSettingsIc
 import CustomersIcon from 'components/icons/menu-icons/CustomersIcon';
 import StatisticsCardItem from './StatisticsCardItem';
 import { fetchData } from 'services/apiService';
+import { useAuth } from 'providers/useAuth';
 
 export interface IStatisticsCard {
   id: number;
@@ -13,6 +14,9 @@ export interface IStatisticsCard {
 }
 
 const ModuleStatisticsCards = () => {
+  const { user } = useAuth();
+  if (user?.is_admin === 0) return <></>;
+
   const [stats, setStats] = useState<any>({
     totalModules: {
       icon: CustomersIcon,
