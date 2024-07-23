@@ -22,7 +22,7 @@ export const tableColumns: GridColDef<tableRowData>[] = [
   },
   { field: 'email', headerName: 'Email', width: 100 },
   {
-    field: 'registeredDate',
+    field: 'created_at',
     headerName: 'Registered Date',
     width: 100,
     valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
@@ -70,7 +70,7 @@ const RegisteredTable = () => {
 
   useEffect(() => {
     apiRef.current.setRows(tableData);
-  }, [apiRef]);
+  }, [apiRef, tableData]);
 
   useEffect(() => {
     apiRef.current.setQuickFilterValues([searchText]);

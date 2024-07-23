@@ -2,12 +2,13 @@ import { LinearProgress, Stack, Typography } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
+import { fetchData } from 'services/apiService';
 
 import CustomDataGridFooter from 'components/common/table/CustomDataGridFooter';
 import CustomDataGridHeader from 'components/common/table/CustomDataGridHeader';
 import CustomDataGridNoRows from 'components/common/table/CustomDataGridNoRows';
 
-import { tableRowData, TableData } from 'data/users/temporary';
+import { tableRowData } from 'data/users/temporary';
 import dayjs from 'dayjs';
 
 export const tableColumns: GridColDef<tableRowData>[] = [
@@ -20,7 +21,7 @@ export const tableColumns: GridColDef<tableRowData>[] = [
     width: 100,
   },
   {
-    field: 'registeredDate',
+    field: 'created_at',
     headerName: 'Registered Date',
     width: 100,
     valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
@@ -34,7 +35,7 @@ export const tableColumns: GridColDef<tableRowData>[] = [
     sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
   },
   {
-    field: 'temporaryCode',
+    field: 'login_code',
     renderCell: (params) => {
       return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
     },
@@ -45,12 +46,24 @@ export const tableColumns: GridColDef<tableRowData>[] = [
 ];
 
 const TemporaryTable = () => {
+  const [tableData, setTableData] = useState<tableRowData[]>([]);
+
   const [searchText, setSearchText] = useState('');
   const apiRef = useGridApiRef<GridApi>();
 
   useEffect(() => {
-    apiRef.current.setRows(TableData);
-  }, [apiRef]);
+    const getData = async () => {
+      const { data, status } = await fetchData(`/users?is_temp=1`);
+      if (status) {
+        setTableData(data);
+      }
+    };
+    getData();
+  }, []);
+
+  useEffect(() => {
+    apiRef.current.setRows(tableData);
+  }, [apiRef, tableData]);
 
   useEffect(() => {
     apiRef.current.setQuickFilterValues([searchText]);
@@ -60,7 +73,7 @@ const TemporaryTable = () => {
     const searchValue = event.currentTarget.value;
     setSearchText(searchValue);
     if (searchValue === '') {
-      apiRef.current.setRows(TableData);
+      apiRef.current.setRows(tableData);
     }
   };
 
@@ -106,7 +119,7 @@ const TemporaryTable = () => {
               onChange: handleChange,
               clearSearch: () => setSearchText(''),
             },
-            pagination: { labelRowsPerPage: TableData.length },
+            pagination: { labelRowsPerPage: tableData.length },
           }}
           initialState={{ pagination: { paginationModel: { page: 1, pageSize: 5 } } }}
           pageSizeOptions={[5, 10, 25]}
