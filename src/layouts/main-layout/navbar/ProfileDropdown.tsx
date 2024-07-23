@@ -7,17 +7,18 @@ import {
   Menu,
   MenuItem,
   Stack,
-  Link,
   Typography,
 } from '@mui/material';
 import AvatarImage from 'assets/images/person.svg';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { profileOptions } from 'data/navbar/menu-data';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from 'providers/useAuth';
 
 const ProfileDropdown = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
@@ -27,6 +28,11 @@ const ProfileDropdown = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const gotoPage = (pageLink: string) => {
+    navigate(pageLink);
+    handleClose();
   };
   return (
     <Box
@@ -60,7 +66,7 @@ const ProfileDropdown = () => {
               display: { xs: 'none', sm: 'block' },
             }}
           >
-            X’eriya Ponald
+            {user?.name}
           </Typography>
         </Stack>
       </ButtonBase>
@@ -88,14 +94,12 @@ const ProfileDropdown = () => {
               py: 1,
               px: 1.5,
             }}
-            onClick={handleClose}
+            onClick={() => gotoPage(option.link)}
           >
-            <Link href={option.link} sx={{ display: 'contents' }}>
-              <ListItemIcon sx={{ '&.MuiListItemIcon-root': { minWidth: 2, mr: 1 } }}>
-                <IconifyIcon width={16} height={16} icon={option.icon} />
-              </ListItemIcon>
-              <Typography variant="subtitle2"> {option.title}</Typography>
-            </Link>
+            <ListItemIcon sx={{ '&.MuiListItemIcon-root': { minWidth: 2, mr: 1 } }}>
+              <IconifyIcon width={16} height={16} icon={option.icon} />
+            </ListItemIcon>
+            <Typography variant="subtitle2"> {option.title}</Typography>
           </MenuItem>
         ))}
         <Stack direction="row" sx={{ width: 1, justifyContent: 'center' }}>

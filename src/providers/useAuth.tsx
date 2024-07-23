@@ -1,8 +1,16 @@
 import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
 import { postData } from 'services/apiService';
 
+interface userType {
+  name: string;
+  email: string;
+  status: string;
+  id: number;
+}
+
 interface AuthContextType {
   isAuthenticated: boolean;
+  user: userType | null;
   login: (credentials: { email: string; password: string }) => void;
   loginByCode: (code: string) => void;
   logout: () => void;
@@ -14,6 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -21,10 +30,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const getData = async () => {
       try {
         const { data, status } = await postData('/refresh', '');
-        const { access_token } = data;
+        const { access_token, user } = data;
         console.log('token refresh === >>> ', access_token, status);
 
         localStorage.setItem('token', access_token);
+
+        setUser(user);
         setIsAuthenticated(status);
       } catch (err) {
         console.error('Failed to fetch data', err);
@@ -44,6 +55,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Store the token in local storage
       localStorage.setItem('token', access_token);
 
+      setUser(user);
       setIsAuthenticated(status);
       return status;
     } catch (error) {
@@ -77,7 +89,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, loginByCode, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, loginByCode, logout }}>
       {children}
     </AuthContext.Provider>
   );
