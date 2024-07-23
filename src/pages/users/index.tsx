@@ -4,6 +4,7 @@ import PageHeader from 'components/common/PageHeader';
 import StatisticsCards from 'components/sections/dashboard/statistics/StatisticCards';
 import RegisteredTable from 'components/users/Registered';
 import CreateForm from 'components/users/CreateForm';
+import { UserProvider } from 'providers/useUser';
 
 const Modalstyle = {
   position: 'absolute',
@@ -23,39 +24,41 @@ const RegisteredUsers = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <Box
-      sx={{
-        pb: 1,
-      }}
-    >
-      <PageHeader>Registered Users</PageHeader>
-      {/* /* ------------- Stats section ---------------- */}
-      <Grid container spacing={3} mt={1} mb={3}>
-        <Grid item xs={12} lg={12}>
-          <StatisticsCards />
+    <UserProvider>
+      <Box
+        sx={{
+          pb: 1,
+        }}
+      >
+        <PageHeader>Registered Users</PageHeader>
+        {/* /* ------------- Stats section ---------------- */}
+        <Grid container spacing={3} mt={1} mb={3}>
+          <Grid item xs={12} lg={12}>
+            <StatisticsCards />
+          </Grid>
         </Grid>
-      </Grid>
 
-      <Grid container spacing={3} mb={3}>
-        <Grid item xs={12} lg={12}>
-          <Button onClick={handleOpen} variant="outlined" color="primary" size="large">
-            Add New User
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={Modalstyle}>
-              <CreateForm />
-            </Box>
-          </Modal>
+        <Grid container spacing={3} mb={3}>
+          <Grid item xs={12} lg={12}>
+            <Button onClick={handleOpen} variant="outlined" color="primary" size="large">
+              Add New User
+            </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={Modalstyle}>
+                <CreateForm handleClose={handleClose} />
+              </Box>
+            </Modal>
 
-          <RegisteredTable />
+            <RegisteredTable />
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </UserProvider>
   );
 };
 

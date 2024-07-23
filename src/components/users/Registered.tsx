@@ -2,7 +2,7 @@ import { Chip, LinearProgress, Stack, Typography } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
-import { fetchData } from 'services/apiService';
+import { useUser } from 'providers/useUser';
 
 import CustomDataGridFooter from 'components/common/table/CustomDataGridFooter';
 import CustomDataGridHeader from 'components/common/table/CustomDataGridHeader';
@@ -53,20 +53,10 @@ export const tableColumns: GridColDef<tableRowData>[] = [
 ];
 
 const RegisteredTable = () => {
-  const [tableData, setTableData] = useState<tableRowData[]>([]);
+  const { tableData } = useUser();
 
   const [searchText, setSearchText] = useState('');
   const apiRef = useGridApiRef<GridApi>();
-
-  useEffect(() => {
-    const getData = async () => {
-      const { data, status } = await fetchData(`/users?is_temp=0`);
-      if (status) {
-        setTableData(data);
-      }
-    };
-    getData();
-  }, []);
 
   useEffect(() => {
     apiRef.current.setRows(tableData);
