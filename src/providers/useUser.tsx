@@ -8,8 +8,6 @@ interface UserContextType {
   handleReload: () => void;
 }
 
-let isMounted = true;
-
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -23,10 +21,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (!isMounted) return;
-
     getData();
-    isMounted = false;
   }, []);
 
   const handleReload = () => {
