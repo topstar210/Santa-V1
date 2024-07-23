@@ -6,6 +6,8 @@ import { RouterProvider } from 'react-router-dom';
 import router from 'routes/router.tsx';
 import { theme } from 'theme/theme.ts';
 import { AuthProvider } from 'providers/useAuth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -16,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <AuthProvider>
           <RouterProvider router={router} />
         </AuthProvider>
+        <ToastContainer />
       </BreakpointsProvider>
     </ThemeProvider>
   </React.StrictMode>,

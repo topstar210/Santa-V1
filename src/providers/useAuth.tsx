@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState, useEffect } from 'react';
 import { postData } from 'services/apiService';
+import { toast } from 'react-toastify';
 
 interface userType {
   name: string;
@@ -57,6 +58,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       setUser(user);
       setIsAuthenticated(status);
+
+      if (status) {
+        toast.success(message, {
+          position: 'top-right',
+        });
+      }
       return status;
     } catch (error) {
       console.error('Login failed:', error);
@@ -74,6 +81,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('token', access_token);
 
       setIsAuthenticated(status);
+
+      if (status) {
+        toast.success(message, {
+          position: 'top-right',
+        });
+      }
       return status;
     } catch (error) {
       console.error('Login failed:', error);

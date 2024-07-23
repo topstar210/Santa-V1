@@ -10,6 +10,7 @@ import {
   Button,
   Stack,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 import { postData } from 'services/apiService';
 import { useUser } from 'providers/useUser';
 
@@ -26,11 +27,13 @@ const CreateForm = ({ handleClose }: { handleClose: any }) => {
   const [form, setForm] = useState(defaultForm);
 
   const handleSave = async () => {
-    const { status } = await postData('/user/add', form);
+    const { status, message } = await postData('/user/add', form);
     if (status) {
       handleReload();
       handleClose();
       setForm(defaultForm);
+
+      toast.success(message);
     }
   };
 

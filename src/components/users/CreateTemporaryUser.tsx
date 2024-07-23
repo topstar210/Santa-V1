@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useTempUser } from 'providers/useTempUser';
 import dayjs, { Dayjs } from 'dayjs';
+import { toast } from 'react-toastify';
 import { postData } from 'services/apiService';
 
 interface formType {
@@ -26,13 +27,14 @@ const CreateTemporaryUser = () => {
   const [form, setForm] = useState(defaultForm);
 
   const handleGenerate = async () => {
-    const { status } = await postData('/user/add-tempuser', {
+    const { status, message } = await postData('/user/add-tempuser', {
       ...form,
       expired_date: dayjs(form.expired_date).format('YYYY-MM-DD'),
     });
     if (status) {
       handleReload();
       setForm(defaultForm);
+      toast.success(message);
     }
     handleReload();
   };
