@@ -2,7 +2,8 @@ import { LinearProgress, Stack, Typography } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
-import { fetchData } from 'services/apiService';
+// import { fetchData } from 'services/apiService';
+import { useTempUser } from 'providers/useTempUser';
 
 import CustomDataGridFooter from 'components/common/table/CustomDataGridFooter';
 import CustomDataGridHeader from 'components/common/table/CustomDataGridHeader';
@@ -28,7 +29,7 @@ export const tableColumns: GridColDef<tableRowData>[] = [
     sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
   },
   {
-    field: 'expiredDate',
+    field: 'expired_date',
     headerName: 'Expired Date',
     width: 100,
     valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
@@ -46,20 +47,22 @@ export const tableColumns: GridColDef<tableRowData>[] = [
 ];
 
 const TemporaryTable = () => {
-  const [tableData, setTableData] = useState<tableRowData[]>([]);
+  const { tableData } = useTempUser();
+
+  // const [tableData, setTableData] = useState<tableRowData[]>([]);
 
   const [searchText, setSearchText] = useState('');
   const apiRef = useGridApiRef<GridApi>();
 
-  useEffect(() => {
-    const getData = async () => {
-      const { data, status } = await fetchData(`/users?is_temp=1`);
-      if (status) {
-        setTableData(data);
-      }
-    };
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const { data, status } = await fetchData(`/users?is_temp=1`);
+  //     if (status) {
+  //       setTableData(data);
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
   useEffect(() => {
     apiRef.current.setRows(tableData);
