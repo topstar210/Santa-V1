@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Store the token in local storage
       localStorage.setItem('token', access_token);
 
+      setUser(user);
       setIsAuthenticated(status);
 
       if (status) {
