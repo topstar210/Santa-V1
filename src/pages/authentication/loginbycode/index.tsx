@@ -1,7 +1,7 @@
 import { Box, Card, Grid, Link, Stack, Typography } from '@mui/material';
 import RegisterForm from 'components/sections/authentication/RegisterForm';
 
-const SignUpPage = () => {
+const LoginByCodePage = () => {
   return (
     <Box mx="auto" sx={{ mx: 'auto', p: 4, width: 1, height: 1 }}>
       <Grid container spacing={1} justifyContent="center" alignItems="center">
@@ -52,4 +52,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LoginByCodePage;

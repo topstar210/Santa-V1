@@ -38,10 +38,10 @@ const LoginPage = () => {
                   ml={1}
                   color="primary"
                   component={Link}
-                  href="/authentication/sign-up"
+                  href="/authentication/login-by-code"
                   variant="button"
                 >
-                  Create an Account
+                  Login Here
                 </Typography>
               </Typography>
             </Stack>

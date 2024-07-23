@@ -11,7 +11,7 @@ import AuthGuard from 'components/auth/AuthGuard';
 const App = lazy(() => import('App'));
 const MainLayout = lazy(() => import('layouts/main-layout'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
-const SignUpPage = lazy(() => import('pages/authentication/register'));
+const LoginByCodePage = lazy(() => import('pages/authentication/loginbycode'));
 const ForgotPasswordPage = lazy(() => import('pages/authentication/forgot-password'));
 const Dashboard = lazy(() => import('pages/dashboard/index'));
 const ProductsPage = lazy(() => import('pages/products'));
@@ -79,8 +79,8 @@ export const routes = [
             element: <LoginPage />,
           },
           {
-            path: paths.signup,
-            element: <SignUpPage />,
+            path: paths.loginByCode,
+            element: <LoginByCodePage />,
           },
           {
             path: paths.forgotPassword,

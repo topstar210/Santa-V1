@@ -18,7 +18,7 @@ const paths = {
   products: `${rootPaths.pagesRoot}products`,
 
   login: `${rootPaths.authRoot}/login`,
-  signup: `${rootPaths.authRoot}/sign-up`,
+  loginByCode: `${rootPaths.authRoot}/login-by-code`,
   forgotPassword: `${rootPaths.authRoot}/forgot-password`,
   notFound: `${rootPaths.errorRoot}/404`,
 };
