@@ -12,6 +12,7 @@ export interface IModuleStatusCards {
   name: string;
   status: string;
   image: string;
+  link: string;
 }
 
 // export const stats: IModuleStatusCards[] = [
@@ -58,7 +59,13 @@ const ModuleStatusCards = () => {
               <CardActionArea>
                 <CardMedia component="img" alt="green iguana" image={cardItem.image} />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    sx={{ '&:hover': { textDecoration: 'underline' } }}
+                    onClick={() => window.open(cardItem.link, '_blank')}
+                  >
                     {cardItem.name}
                   </Typography>
                   <Typography gutterBottom variant="h5" component="div">
