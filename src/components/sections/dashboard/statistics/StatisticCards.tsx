@@ -16,22 +16,22 @@ const StatisticsCards = () => {
   const [stats, setStats] = useState<any>({
     totalUsers: {
       icon: CustomersIcon,
-      title: '1000',
+      title: '0',
       subtitle: 'Total Users',
     },
     registUsers: {
       icon: PersonalSettingsIcon,
-      title: '700',
+      title: '0',
       subtitle: 'Registered Users',
     },
     tempUsers: {
       icon: PersonalSettingsIcon,
-      title: '300',
+      title: '0',
       subtitle: 'Temporary Users',
     },
     totalModules: {
       icon: ProductsIcon,
-      title: '55',
+      title: '0',
       subtitle: 'Total Modules',
     },
   });
@@ -39,10 +39,10 @@ const StatisticsCards = () => {
   useEffect(() => {
     const getData = async () => {
       const { data, status } = await fetchData('/user/analytic');
+      let userData = {};
       if (status) {
         const { total, registered, temp } = data;
-        setStats({
-          ...stats,
+        userData = {
           totalUsers: {
             ...stats.totalUsers,
             title: total,
@@ -55,14 +55,14 @@ const StatisticsCards = () => {
             ...stats.tempUsers,
             title: temp,
           },
-        });
+        };
       }
 
       const moduleData = await fetchData('/module/analytic');
       if (moduleData.status) {
         const { total } = moduleData.data;
         setStats({
-          ...stats,
+          ...userData,
           totalModules: {
             ...stats.totalModules,
             title: total,
