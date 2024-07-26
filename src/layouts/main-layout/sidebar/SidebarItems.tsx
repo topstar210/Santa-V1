@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Box, List } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import { IMenuitems } from './MenuItems';
@@ -19,41 +20,45 @@ const SidebarItems = () => {
   const location = useLocation();
   const { pathname } = location;
 
-  const Menuitems: IMenuitems[] = [
-    {
-      id: uniqueId(),
-      title: 'Dashboard',
-      icon: HomeIcon,
-      href: '/',
-      available: true,
-    },
-    {
-      id: uniqueId(),
-      title: 'Registered Users',
-      icon: CustomersIcon,
-      href: '/users',
-      available: user?.is_admin === 111,
-    },
-    {
-      id: uniqueId(),
-      title: 'Temporary Users',
-      icon: PersonalSettingsIcon,
-      href: '/temporary-users',
-      available: user?.is_admin === 111,
-    },
-    {
-      id: uniqueId(),
-      title: 'Modules',
-      icon: CategoriesIcon,
-      href: '/modules',
-      available: true,
-    },
-  ];
+  const [menuitems, setMenuitems] = useState<IMenuitems[]>([]);
+
+  useEffect(() => {
+    setMenuitems([
+      {
+        id: uniqueId(),
+        title: 'Dashboard',
+        icon: HomeIcon,
+        href: '/',
+        available: true,
+      },
+      {
+        id: uniqueId(),
+        title: 'Registered Users',
+        icon: CustomersIcon,
+        href: '/users',
+        available: Number(user?.is_admin) === 111,
+      },
+      {
+        id: uniqueId(),
+        title: 'Temporary Users',
+        icon: PersonalSettingsIcon,
+        href: '/temporary-users',
+        available: Number(user?.is_admin) === 111,
+      },
+      {
+        id: uniqueId(),
+        title: 'Modules',
+        icon: CategoriesIcon,
+        href: '/modules',
+        available: true,
+      },
+    ]);
+  }, [user]);
 
   return (
     <Box sx={{ p: 2 }}>
       <List sx={{ pt: 0 }}>
-        {Menuitems.map((item) => {
+        {menuitems.map((item) => {
           if (item.subheader) {
             return <NavItemGroup subheader={item.subheader} key={item.subheader} />;
           } else {
