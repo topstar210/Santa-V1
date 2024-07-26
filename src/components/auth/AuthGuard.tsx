@@ -5,8 +5,12 @@ interface AuthGuardProps {
   children: React.ReactNode;
 }
 
+const locationHistory: any = [];
+
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const location = useLocation();
+  locationHistory.push(location);
+
   const { pathname } = location;
 
   const { isAuthenticated } = useAuth();
@@ -16,7 +20,7 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   if (!isAuthenticated && !isAuthenticatedPath) {
     return <Navigate to="/authentication/login" replace />;
   } else if (isAuthenticated && isAuthenticatedPath) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={`${locationHistory[0].pathname}${locationHistory[0].search}`} replace />;
   }
 
   return <>{children}</>;

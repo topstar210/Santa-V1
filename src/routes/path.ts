@@ -13,6 +13,7 @@ const paths = {
   registeredUser: `${rootPaths.pagesRoot}users`,
   temporaryUser: `${rootPaths.pagesRoot}temporary-users`,
   modules: `${rootPaths.pagesRoot}modules`,
+  moduleViewer: `${rootPaths.pagesRoot}module/view`,
   profile: `${rootPaths.pagesRoot}profile`,
 
   products: `${rootPaths.pagesRoot}products`,

@@ -21,6 +21,7 @@ const ProfilePage = lazy(() => import('pages/profile'));
 const RegisteredUsers = lazy(() => import('pages/users'));
 const TemporaryUsers = lazy(() => import('pages/temporary-users'));
 const Modules = lazy(() => import('pages/modules'));
+const ModuleViewer = lazy(() => import('pages/moduleViewer'));
 
 const NotFoundPage = lazy(() => import('pages/not-found'));
 /* -------------------------------------------------------------------------- */
@@ -112,6 +113,10 @@ const AppRouter = () => {
               element: <NotFoundPage />,
             },
           ],
+        },
+        {
+          path: paths.moduleViewer,
+          element: <ModuleViewer />,
         },
         {
           path: '*',
