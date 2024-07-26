@@ -20,8 +20,8 @@ const LoginForm = () => {
   const { login } = useAuth();
 
   const [form, setForm] = useState({
-    email: 'tester123@example.com',
-    password: '123456',
+    email: '',
+    password: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
