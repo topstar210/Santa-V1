@@ -15,7 +15,7 @@ export interface IStatisticsCard {
 
 const ModuleStatisticsCards = () => {
   const { user } = useAuth();
-  if (user?.is_admin === 0) return <></>;
+  if (Number(user?.is_admin) != 111) return <></>;
 
   const [stats, setStats] = useState<any>({
     totalModules: {
