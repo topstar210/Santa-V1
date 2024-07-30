@@ -88,6 +88,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         toast.success(message, {
           position: 'top-right',
         });
+      } else {
+        toast.info(message);
       }
       return status;
     } catch (error) {

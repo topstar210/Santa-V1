@@ -13,8 +13,10 @@ import { useAuth } from 'providers/useAuth';
 const App = lazy(() => import('App'));
 const MainLayout = lazy(() => import('layouts/main-layout'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
+const EmailVerification = lazy(() => import('pages/authentication/EmailVerification'));
 const LoginByCodePage = lazy(() => import('pages/authentication/loginbycode'));
 const ForgotPasswordPage = lazy(() => import('pages/authentication/forgot-password'));
+
 const Dashboard = lazy(() => import('pages/dashboard/index'));
 const ProductsPage = lazy(() => import('pages/products'));
 const ProfilePage = lazy(() => import('pages/profile'));
@@ -117,6 +119,10 @@ const AppRouter = () => {
         {
           path: paths.moduleViewer,
           element: <ModuleViewer />,
+        },
+        {
+          path: '/email/verify/:id/:hash',
+          element: <EmailVerification />,
         },
         {
           path: '*',
