@@ -30,7 +30,14 @@ const ModuleStatusCards = () => {
       {stats.map((cardItem) => {
         return (
           <Grid item xs={12} md={6} xl={4} key={cardItem.id}>
-            <Card>
+            <Card
+              onClick={() =>
+                window.open(
+                  `${location.origin}${paths.moduleViewer}?link=${cardItem.link}`,
+                  '_blank',
+                )
+              }
+            >
               <CardActionArea>
                 <CardMedia component="img" alt="green iguana" image={cardItem.image} />
                 <CardContent>
@@ -39,12 +46,6 @@ const ModuleStatusCards = () => {
                     variant="h5"
                     component="div"
                     sx={{ '&:hover': { textDecoration: 'underline' } }}
-                    onClick={() =>
-                      window.open(
-                        `${location.origin}${paths.moduleViewer}?link=${cardItem.link}`,
-                        '_blank',
-                      )
-                    }
                   >
                     {cardItem.name}
                   </Typography>
