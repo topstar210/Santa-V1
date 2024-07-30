@@ -96,9 +96,7 @@ const TemporaryTable = () => {
 
   const deleteRow = async (id: string) => {
     if (!confirm('Are you sure you want to delete this row?')) return;
-    const { status, message } = await postData('/user/delete-temp-user', {
-      id,
-    });
+    const { status, message } = await postData(`/user/delete-temp-user/${id}`, {});
     if (status) {
       handleReload();
       toast.success(message);

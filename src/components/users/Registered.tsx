@@ -90,9 +90,7 @@ const RegisteredTable = () => {
 
   const deleteRow = async (id: string) => {
     if (!confirm('Are you sure you want to delete this row?')) return;
-    const { status, message } = await postData('/user/delete-user', {
-      id,
-    });
+    const { status, message } = await postData(`/user/delete-user/${id}`, {});
     if (status) {
       handleReload();
       toast.success(message);
