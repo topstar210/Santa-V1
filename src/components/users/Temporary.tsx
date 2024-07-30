@@ -1,9 +1,10 @@
-import { LinearProgress, Stack, Typography } from '@mui/material';
+import { LinearProgress, Stack, Typography, Button } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 // import { fetchData } from 'services/apiService';
 import { useTempUser } from 'providers/useTempUser';
+import { postData } from 'services/apiService';
 
 import CustomDataGridFooter from 'components/common/table/CustomDataGridFooter';
 import CustomDataGridHeader from 'components/common/table/CustomDataGridHeader';
@@ -11,43 +12,56 @@ import CustomDataGridNoRows from 'components/common/table/CustomDataGridNoRows';
 
 import { tableRowData } from 'data/users/temporary';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
-export const tableColumns: GridColDef<tableRowData>[] = [
-  {
-    field: 'name',
-    renderCell: (params) => {
-      return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+export const tableColumns = (deleteRow: (id: string) => void) => {
+  const tbColumns: GridColDef<tableRowData>[] = [
+    {
+      field: 'name',
+      renderCell: (params) => {
+        return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+      },
+      headerName: 'Name',
+      width: 100,
     },
-    headerName: 'Name',
-    width: 100,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Registered Date',
-    width: 100,
-    valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
-    sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
-  },
-  {
-    field: 'expired_date',
-    headerName: 'Expired Date',
-    width: 100,
-    valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
-    sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
-  },
-  {
-    field: 'login_code',
-    renderCell: (params) => {
-      return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+    {
+      field: 'created_at',
+      headerName: 'Registered Date',
+      width: 100,
+      valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
+      sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
     },
-    headerName: 'Temporary code',
-    width: 100,
-    align: 'center',
-  },
-];
+    {
+      field: 'expired_date',
+      headerName: 'Expired Date',
+      width: 100,
+      valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
+      sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
+    },
+    {
+      field: 'login_code',
+      renderCell: (params) => {
+        return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+      },
+      headerName: 'Temporary code',
+      width: 100,
+      align: 'center',
+    },
+    {
+      field: 'id',
+      headerName: '',
+      width: 50,
+      sortable: false,
+      renderCell: (params) => {
+        return <Button onClick={() => deleteRow(params.value)}>Delete</Button>;
+      },
+    },
+  ];
+  return tbColumns;
+};
 
 const TemporaryTable = () => {
-  const { tableData } = useTempUser();
+  const { tableData, handleReload } = useTempUser();
 
   // const [tableData, setTableData] = useState<tableRowData[]>([]);
 
@@ -80,6 +94,17 @@ const TemporaryTable = () => {
     }
   };
 
+  const deleteRow = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this row?')) return;
+    const { status, message } = await postData('/user/delete-temp-user', {
+      id,
+    });
+    if (status) {
+      handleReload();
+      toast.success(message);
+    }
+  };
+
   return (
     <Stack
       sx={{
@@ -93,7 +118,7 @@ const TemporaryTable = () => {
         <DataGrid
           autoHeight={false}
           rowHeight={52}
-          columns={tableColumns}
+          columns={tableColumns(deleteRow)}
           loading={false}
           apiRef={apiRef}
           onResize={() => {

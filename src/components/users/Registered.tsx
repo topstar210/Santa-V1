@@ -1,8 +1,9 @@
-import { Chip, LinearProgress, Stack, Typography } from '@mui/material';
+import { Chip, LinearProgress, Stack, Typography, Button } from '@mui/material';
 import { DataGrid, GridApi, GridColDef, GridSlots, useGridApiRef } from '@mui/x-data-grid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import SimpleBar from 'simplebar-react';
 import { useUser } from 'providers/useUser';
+import { postData } from 'services/apiService';
 
 import CustomDataGridFooter from 'components/common/table/CustomDataGridFooter';
 import CustomDataGridHeader from 'components/common/table/CustomDataGridHeader';
@@ -10,50 +11,63 @@ import CustomDataGridNoRows from 'components/common/table/CustomDataGridNoRows';
 
 import { tableRowData } from 'data/users/registered';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 
-export const tableColumns: GridColDef<tableRowData>[] = [
-  {
-    field: 'name',
-    renderCell: (params) => {
-      return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+export const tableColumns = (deleteRow: (id: string) => void) => {
+  const tbColumns: GridColDef<tableRowData>[] = [
+    {
+      field: 'name',
+      renderCell: (params) => {
+        return <Typography sx={{ fontWeight: 500 }}>{params.value}</Typography>;
+      },
+      headerName: 'Name',
+      width: 100,
     },
-    headerName: 'Name',
-    width: 100,
-  },
-  { field: 'email', headerName: 'Email', width: 100 },
-  {
-    field: 'created_at',
-    headerName: 'Registered Date',
-    width: 100,
-    valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
-    sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
-  },
-  {
-    field: 'status',
-    renderCell: (params) => {
-      let color: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' =
-        'default';
-
-      switch (params.value) {
-        case 'active':
-          color = 'success';
-          break;
-        case 'pending':
-          color = 'default';
-          break;
-        default:
-          break;
-      }
-
-      return <Chip label={params.value} color={color} />;
+    { field: 'email', headerName: 'Email', width: 100 },
+    {
+      field: 'created_at',
+      headerName: 'Registered Date',
+      width: 100,
+      valueFormatter: (params) => dayjs(params).format('DD.MM.YYYY'),
+      sortComparator: (v1, v2) => dayjs(v1).unix() - dayjs(v2).unix(),
     },
-    headerName: 'Status',
-    width: 100,
-  },
-];
+    {
+      field: 'status',
+      renderCell: (params) => {
+        let color: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' =
+          'default';
+
+        switch (params.value) {
+          case 'active':
+            color = 'success';
+            break;
+          case 'pending':
+            color = 'default';
+            break;
+          default:
+            break;
+        }
+
+        return <Chip label={params.value} color={color} />;
+      },
+      headerName: 'Status',
+      width: 100,
+    },
+    {
+      field: 'id',
+      headerName: '',
+      width: 50,
+      sortable: false,
+      renderCell: (params) => {
+        return <Button onClick={() => deleteRow(params.value)}>Delete</Button>;
+      },
+    },
+  ];
+  return tbColumns;
+};
 
 const RegisteredTable = () => {
-  const { tableData } = useUser();
+  const { tableData, handleReload } = useUser();
 
   const [searchText, setSearchText] = useState('');
   const apiRef = useGridApiRef<GridApi>();
@@ -74,6 +88,17 @@ const RegisteredTable = () => {
     }
   };
 
+  const deleteRow = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this row?')) return;
+    const { status, message } = await postData('/user/delete-user', {
+      id,
+    });
+    if (status) {
+      handleReload();
+      toast.success(message);
+    }
+  };
+
   return (
     <Stack
       sx={{
@@ -88,7 +113,7 @@ const RegisteredTable = () => {
         <DataGrid
           autoHeight={false}
           rowHeight={52}
-          columns={tableColumns}
+          columns={tableColumns(deleteRow)}
           loading={false}
           apiRef={apiRef}
           onResize={() => {
