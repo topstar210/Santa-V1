@@ -37,8 +37,8 @@ const EmailVerification = () => {
           <Typography variant="h5" gutterBottom>
             Your email has been successfully verified!
           </Typography>
-          <Button variant="contained" color="primary" href="/">
-            Go to Home
+          <Button variant="contained" color="primary" href="/authentication/login">
+            Go to Login
           </Button>
         </div>
       )}
@@ -48,8 +48,8 @@ const EmailVerification = () => {
             Verification Failed
           </Typography>
           <Alert severity="error">{errorMessage}</Alert>
-          <Button variant="contained" color="primary" href="/authentication/login">
-            Go to Login
+          <Button variant="contained" color="primary" href="/">
+            Go to Home
           </Button>
         </div>
       )}
