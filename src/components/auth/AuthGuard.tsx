@@ -17,10 +17,12 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
 
   const isAuthenticatedPath = pathname.includes('authentication');
 
-  if (!isAuthenticated && !isAuthenticatedPath) {
-    return <Navigate to="/authentication/login" replace />;
-  } else if (isAuthenticated && isAuthenticatedPath) {
-    return <Navigate to={`${locationHistory[0].pathname}${locationHistory[0].search}`} replace />;
+  if (!pathname.includes('email/verify')) {
+    if (!isAuthenticated && !isAuthenticatedPath) {
+      return <Navigate to="/authentication/login" replace />;
+    } else if (isAuthenticated && isAuthenticatedPath) {
+      return <Navigate to={`${locationHistory[0].pathname}${locationHistory[0].search}`} replace />;
+    }
   }
 
   return <>{children}</>;
